@@ -29,45 +29,49 @@ const weatherData = [
 
 export default function HomeScreen() {
   return (
-    <SafeAreaView style={styles.container}>
-      {/* Greeting Section */}
-      <View style={styles.greetingContainer}>
-        <Text style={styles.textGreeting}>Good Morning</Text>
-        <Text style={styles.date}>{new Date().toDateString()}</Text>
-      </View>
-
-      {/* Weather Info Section */}
-      <View style={styles.midContainer}>
-        <Text style={styles.location}>Tokyo</Text>
-        <Text style={styles.temperature}>25 °C</Text>
-        <Text style={styles.weatherCondition}>Mostly Sunny</Text>
-      </View>
-
-      {/* Animation Section */}
-      <View style={styles.iconContainer}>
-        <View style={styles.animationWrapper}>
-          <LottieView
-            autoPlay
-            style={styles.animation}
-            source={require("../assets/images/animation1.json")}
-          />
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>
+        {/* Greeting Section */}
+        <View style={styles.greetingContainer}>
+          <Text style={styles.textGreeting}>Good Morning</Text>
+          <Text style={styles.date}>{new Date().toDateString()}</Text>
         </View>
-      </View>
 
-      {/* Weather Card Section */}
-      <View>
-        <WeatherCard weatherData={weatherData} />
+        {/* Weather Info Section */}
+        <View style={styles.midContainer}>
+          <Text style={styles.location}>Tokyo</Text>
+          <Text style={styles.temperature}>25 °C</Text>
+          <Text style={styles.weatherCondition}>Mostly Sunny</Text>
+        </View>
+
+        {/* Animation Section */}
+        <View style={styles.iconContainer}>
+          <View style={styles.animationWrapper}>
+            <LottieView
+              autoPlay
+              style={styles.animation}
+              source={require("../assets/images/animation1.json")}
+            />
+          </View>
+        </View>
+
+        {/* Weather Card Section */}
+        <View>
+          <WeatherCard weatherData={weatherData} />
+        </View>
       </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     backgroundColor: "#E9EEF4",
-    paddingTop: 40,
-    marginHorizontal: 16,
+    paddingHorizontal: 16,
   },
   textGreeting: {
     fontFamily: "RubikSemiBold",
