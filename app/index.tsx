@@ -1,33 +1,56 @@
-import React from "react";
-import { StyleSheet, View, SafeAreaView, Text } from "react-native";
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  View,
+  SafeAreaView,
+  Text,
+  TouchableOpacity,
+} from "react-native";
 import LottieView from "lottie-react-native";
 import WeatherCard from "../components/WeatherCard";
 
 // Example weather data
-const weatherData = [
-  {
-    day: "Friday, 1 Nov",
-    temperature: 22,
-    icon: require("../assets/icons/sunny.png"),
-  },
-  {
-    day: "Saturday, 2 Nov",
-    temperature: 25,
-    icon: require("../assets/icons/sunny.png"),
-  },
-  {
-    day: "Sunday, 3 Nov",
-    temperature: 19,
-    icon: require("../assets/icons/sunny.png"),
-  },
-  {
-    day: "Monday, 4 Nov",
-    temperature: 20,
-    icon: require("../assets/icons/sunny.png"),
-  },
-];
+const weatherData = {
+  temp : 26,
+  weatherCondition: "Mostly Sunny",
+  city: "Tokyo",
+  nextDays: [
+    {
+      day: "Friday, 1 Nov",
+      temperature: 22,
+      icon: require("../assets/icons/sunny.png"),
+    },
+    {
+      day: "Saturday, 2 Nov",
+      temperature: 25,
+      icon: require("../assets/icons/sunny.png"),
+    },
+    {
+      day: "Sunday, 3 Nov",
+      temperature: 19,
+      icon: require("../assets/icons/sunny.png"),
+    },
+    {
+      day: "Monday, 4 Nov",
+      temperature: 20,
+      icon: require("../assets/icons/sunny.png"),
+    },
+  ]
+};
 
 export default function HomeScreen() {
+  const [temperatureInCelsius, setTemperatureInCelsius] = useState(true);
+
+  const toggleTemperature = () => {
+    setTemperatureInCelsius(!temperatureInCelsius);
+  };
+
+  const temperature = temperatureInCelsius
+    ? weatherData.temp // Celsius value
+    : (weatherData.temp * 9) / 5 + 32; // Convert Celsius to Fahrenheit
+
+  const temperatureUnit = temperatureInCelsius ? "°C" : "°F";
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
@@ -39,9 +62,13 @@ export default function HomeScreen() {
 
         {/* Weather Info Section */}
         <View style={styles.midContainer}>
-          <Text style={styles.location}>Tokyo</Text>
-          <Text style={styles.temperature}>25 °C</Text>
-          <Text style={styles.weatherCondition}>Mostly Sunny</Text>
+          <Text style={styles.location}>{weatherData.city}</Text>
+          <TouchableOpacity onPress={toggleTemperature}>
+            <Text style={styles.temperature}>
+              {Math.round(temperature)} {temperatureUnit}
+            </Text>
+          </TouchableOpacity>
+          <Text style={styles.weatherCondition}>{weatherData.weatherCondition}</Text>
         </View>
 
         {/* Animation Section */}
@@ -57,7 +84,7 @@ export default function HomeScreen() {
 
         {/* Weather Card Section */}
         <View>
-          <WeatherCard weatherData={weatherData} />
+          <WeatherCard weatherData={weatherData.nextDays} />
         </View>
       </View>
     </SafeAreaView>
